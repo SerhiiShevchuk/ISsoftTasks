@@ -1,26 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Task_NET01_1.Enums;
-using System.ComponentModel.DataAnnotations;
 
 namespace Task_NET01_1
 {
     class NetworkReference : Material
     {
-        [Required(ErrorMessage = "ContentURL is empty", AllowEmptyStrings = false)]
-        public string ContentURL { get; set; }
-        public ReferenceType Type { get; set; }
-
+        public NetworkReference(string contentURL, ReferenceType type,  string descript = null) : base(descript)
+        {
+            ContentURL = contentURL;
+            Type = type;
+        }
         public override object Clone()
         {
-            return new NetworkReference() { 
-                Descript = this.Descript, 
-                ContentURL = this.ContentURL,
-                Type = this.Type 
+            return new NetworkReference(this.ContentURL, this.Type, this.Descript)
+            {
+                Guid = this.Guid,
             };
         }
+        
+        private string _contentURL;
+        public string ContentURL
+        {
+            get
+            {
+                return _contentURL;
+            }
+            set
+            {
+                if (value == null || value == string.Empty)
+                {
+                    throw new Exception("ContentURL is empty or null");
+                }
+                _contentURL = value;
+            }
+        }
+        public ReferenceType Type { get; set; }
     }
 }

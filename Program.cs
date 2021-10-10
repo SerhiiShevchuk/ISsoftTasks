@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Task_NET01_1
 {
-    abstract class Material : Entity
+    class Program
     {
+        static void Main(string[] args)
+        {
+        }
     }
 }

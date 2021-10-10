@@ -1,24 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 
 namespace Task_NET01_1
 {
     class TextMaterial : Material
     {
-        [Required(ErrorMessage = "Text is empty", AllowEmptyStrings = false)]
-        [StringLength(10000, ErrorMessage = "Invalid Text length ")]
-        public string Text { get; set; }
-
+        public TextMaterial(string text, string descript = null) : base(descript)
+        {
+            Text = text;
+        }
         public override object Clone()
         {
-            return new TextMaterial() {
-                Descript = this.Descript, 
-                Text = this.Text 
+            return new TextMaterial(this.Text, this.Descript)
+            {
+                Guid = this.Guid
             };
         }
+
+        private string _text;
+        public string Text
+        {
+            get
+            {
+                return _text;
+            }
+            set 
+            {
+                const int _maxLengthText = 1000;
+                if (value == null || _maxLengthText < value.Length || value == string.Empty)
+                {
+                    throw new Exception($"Text can't be null|empty or longer {_maxLengthText}");
+                }
+
+                _text = value;
+            } 
+        }
+
     }
 }
