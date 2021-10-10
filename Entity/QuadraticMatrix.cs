@@ -1,51 +1,87 @@
 ﻿using System;
-using Task_NET01_2.Exceptions;
 
 namespace Task_NET01_2.Entity
 {
+    /// <summary>
+    /// Template quadratic matrix
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     class QuadraticMatrix<T>
     {
-        public QuadraticMatrix(int lenth)
+        public QuadraticMatrix(int size)
         {
-            if (lenth < 0 || Math.Sqrt(lenth) % 1 != 0) {
-                throw new InvalidMatrixException("Invalid lenth for Quadratic matrix");
-            }
-
-            Order = (int)Math.Sqrt(lenth);
-            Matrix = new T[lenth];
+            Size = size;
         }
+        /// <summary>
+        /// Indexer for quadratic matrix
+        /// </summary>
+        /// <param name="i">row</param>
+        /// <param name="j">column</param>
+        /// <exception cref="System.IndexOutOfRangeException">
+        ///  <paramref name="i" /> must be &gt 0 but &lt <see cref="_order"/>
+        ///  <paramref name="j" /> must be &gt 0 but &lt <see cref="_order"/>
+        /// </exception>
+        /// <returns></returns>
         public T this[int i, int j]
         {
             get
             {
-                if (Order <= i || Order <= j || i < 0 || j < 0)  {
-                    throw new InvalidIndexException("error: Index lower 0 either bigger row or column length");
+                if (_order <= i || _order <= j || i < 0 || j < 0)
+                {
+                    throw new IndexOutOfRangeException("Index lower 0 either bigger row or column length");
                 }
 
-                return Matrix[i * Order + j];
+                return Matrix[i * _order + j];
             }
             set
             {
-                CheckSetIterators(i, j);
+                CheckSetIndexes(i, j);
 
-                if (!Matrix[i * Order + j].Equals(value)) {
-                    NotifyChange?.Invoke(new ChangeEventArgs<T>(i, j, Matrix[i * Order + j]));
+                if (!Matrix[i * _order + j].Equals(value))
+                {
+                    NotifyChange?.Invoke(new ChangeEventArgs<T>(i, j, Matrix[i * _order + j]));
                 }
 
-                Matrix[i * Order + j] = value;
+                Matrix[i * _order + j] = value;
             }
         }
-        protected virtual void CheckSetIterators(int rowIndex, int colIndex)
+        protected virtual void CheckSetIndexes(int rowIndex, int colIndex)
         {
-            if (Order <= rowIndex || Order <= colIndex || rowIndex < 0 || colIndex < 0)  {
-                throw new InvalidIndexException("error: Index lower 0 either bigger row/column length");
+            if (_order <= rowIndex || _order <= colIndex || rowIndex < 0 || colIndex < 0) 
+            {
+                throw new IndexOutOfRangeException("Index lower 0 either bigger row/column length");
             }
         }
 
         public delegate void ChangeHandler(ChangeEventArgs<T> e);
         public event ChangeHandler NotifyChange;
+        protected int _order;
+        private int _size;
+        /// <summary>
+        /// Size of quadratic matrix
+        /// </summary>
+        /// <exception cref="System.ArgumentException">
+        ///  <paramref name="value" /> must be &gt 0 and sqrt return integer/>
+        /// </exception>
+        public int Size 
+        {
+            get
+            {
+                return _size;
+            }
+            private set
+            {
+                if (value < 0 || Math.Sqrt(value) % 1 != 0)
+                {
+                    throw new ArgumentException("Invalid size for Quadratic matrix");
+                }
+
+                _order = (int)Math.Sqrt(value);
+                _size = value;
+                Matrix = new T[_size];
+            }
+        }
         public T[] Matrix { get; set; }
-        public int Order { get; }
     }
 
     class ChangeEventArgs<T>
