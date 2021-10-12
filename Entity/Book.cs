@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
 namespace Task_NET02_1.Entity
@@ -11,21 +8,6 @@ namespace Task_NET02_1.Entity
     {
         public Book( string title, string isbn = null, DateTime? publicationData = null, List<Author> authors = null )
         {
-            string pattern = @"(^[0-9]{3}-[0-9]{1}-[0-9]{2}-[0-9]{6}-[0-9]{1}$)|(^[0-9]{13}$)";
-            
-            if (title == null || title.Length > 1000) 
-            {
-                throw new Exception();
-            }
-            if (isbn != null)
-            {
-                isbn = isbn.Trim();
-                if (!Regex.IsMatch(isbn, pattern))
-                {
-                    throw new Exception();
-                }
-            }
-            
             Title = title;
             ISBN = isbn;
             Authors = authors;
@@ -35,7 +17,7 @@ namespace Task_NET02_1.Entity
         {
             if (obj is Book book)
             {
-                if (ISBN.Replace("-", string.Empty) == book.ISBN.Replace("-", string.Empty))
+                if (this.ISBN == book.ISBN)
                 {
                     return true;
                 }
@@ -55,8 +37,46 @@ namespace Task_NET02_1.Entity
             }
         }
 
-        public string ISBN { get; set; }
-        public string Title { get; set; }
+        private string _pattern = @"(^[0-9]{3}-[0-9]{1}-[0-9]{2}-[0-9]{6}-[0-9]{1}$)|(^[0-9]{13}$)";
+        private string _isbn;
+        public string ISBN
+        {
+            get
+            {
+                return _isbn;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    value = value.Trim();
+                    if (!Regex.IsMatch(value, _pattern))
+                    {
+                        throw new Exception("Invalid format ISBN");
+                    }
+                }
+
+                _isbn = value?.Replace("-", string.Empty) ?? null;
+            }
+        }
+        private string _title;
+        public string Title 
+        {
+            get
+            {
+                return _title;
+            }
+            set
+            {
+                const int SIZE = 1000;
+                if (value == null || value.Length > SIZE)
+                {
+                    throw new Exception($"Title can't be empty or longer {SIZE}");
+                }
+              
+                _title = value;
+            }
+        }
         public DateTime? PublicationData { get; set; }
         public List<Author> Authors { get; set; }
     }

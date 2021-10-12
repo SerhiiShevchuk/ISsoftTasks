@@ -23,12 +23,9 @@ namespace Task_NET02_1_Test
             Assert.Throws<Exception>(() => new Book("adsf", value));
         }
         
-        [Theory]
-        //[InlineData(new string('c', 1000)]
-        [InlineData(null)]
-        public void When_BookTitleLonger1000_Expect_Exception(string value)
+        [Fact]
+        public void When_BookTitleLonger1000_Expect_Exception()
         {
-            Assert.Throws<Exception>(() => new Book(title: null));
             Assert.Throws<Exception>(() => new Book(title: new string('c',1001)));
         }
 
@@ -48,15 +45,15 @@ namespace Task_NET02_1_Test
         }
 
         [Fact]
-        public void When_FirstAndLastNameIsNull_Expect_Exception()
+        public void When_FirstAndLastNameIsNull_Expect_ArgumentException()
         {
-            Assert.Throws<Exception>(() => new Author(firstName: null, lastName: null));
+            Assert.Throws<ArgumentException>(() => new Author(firstName: null, lastName: null));
         }
 
         [Fact]
-        public void When_FirstAndLastNameLonger200_Expect_Exception()
+        public void When_FirstAndLastNameLonger200_Expect_ArgumentException()
         {
-            Assert.Throws<Exception>(() 
+            Assert.Throws<ArgumentException>(() 
                 => new Author(firstName: new string('c', 201), new string('c', 201)));
         }
 
@@ -71,8 +68,9 @@ namespace Task_NET02_1_Test
             };
             
             Catalog catalog = new Catalog(books);
-            
-            Assert.Equal(catalog[value].ISBN, value);
+            var a = catalog[value];
+            value.Replace("-", string.Empty);
+            Assert.Equal(catalog[value].ISBN, value.Replace("-", string.Empty));
         }
 
         [Theory]

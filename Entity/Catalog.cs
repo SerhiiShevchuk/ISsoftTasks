@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task_NET02_1.Entity
 {
@@ -17,15 +15,11 @@ namespace Task_NET02_1.Entity
         {
             get
             {
-                if (!Books.Select(b => b.ISBN).Any(t => t == isbn))
-                {
-                    throw new IndexOutOfRangeException();
-                }
-
-                return Books.First(b => b.ISBN == isbn);
+                return Books.First(b => b.ISBN == isbn.Replace("-", string.Empty));
             }
             set
             {
+                isbn = isbn.Replace("-", string.Empty);
                 if (!Books.Select(b => b.ISBN).Any(t => t == isbn))
                 {
                     throw new IndexOutOfRangeException();
