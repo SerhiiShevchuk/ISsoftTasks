@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace Task_NET01_1
 {
@@ -8,7 +7,7 @@ namespace Task_NET01_1
         public Entity(string descript)
         {
             Descript = descript;
-            Guid = Guid.NewGuid();
+            _guid = Guid.NewGuid();
         }
         public override string ToString()
         {
@@ -41,7 +40,7 @@ namespace Task_NET01_1
                 _discript = value;
             }
         }
+        private Guid _guid;
         public Guid Guid { get; set; }
-
     }
 }
