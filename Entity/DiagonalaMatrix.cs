@@ -2,16 +2,41 @@
 
 namespace Task_NET01_2.Entity
 {
-    class DiagonalaMatrix<T> : QuadraticMatrix<T>
+    class DiagonalaMatrix<T> : SquareMatrix<T>
     {
-        public DiagonalaMatrix(int lenth) : base(lenth)
-        { }
-        protected override void CheckSetIndexes(int i, int j)
+        public DiagonalaMatrix(int rank)
         {
-            if (_order < i || i < 0 || i != j)
+            Rank = rank;
+            Matrix = new T[rank];
+        }
+
+        public override T this[int i, int j]
+        {
+            get
             {
-                throw new ArgumentException(
-                    "Index lower 0 either bigger row/column length or you refering to not diagonal's element");
+                CheckIndexes(i, j);
+                if (i != j)
+                {
+                    return default(T);
+                }
+
+                return Matrix[i];
+            }
+            set
+            {
+                CheckIndexes(i, j);
+                if (i != j)
+                {
+                    throw new ArgumentException(
+                   "You refering to not diagonal's element");
+                }
+
+                if (!Matrix[i].Equals(value))
+                {
+                    InvokeNotify(new ChangeEventArgs<T>(i, j, Matrix[i]));
+                }
+
+                Matrix[i] = value;
             }
         }
     }
