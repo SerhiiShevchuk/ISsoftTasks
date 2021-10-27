@@ -1,0 +1,20 @@
+[
+  {
+    "CheckInterval": 1,
+    "ExpectedTime": 15,
+    "WebsiteURL": "https://www.youtube.com/watch?v=FFUGuOkLFjc",
+    "MaiAdminSettings": 4
+  },
+  {
+    "CheckInterval": 3,
+    "ExpectedTime": 15,
+    "WebsiteURL": "https://metanit.com/sharp/net/8.1.php",
+    "MaiAdminSettings": 4
+  },
+  {
+    "CheckInterval": 3,
+    "ExpectedTime": 15,
+    "WebsiteURL": "https://metanit.com/sharp/net/8.1.php",
+    "MaiAdminSettings": 4
+  }
+]
