@@ -1,0 +1,42 @@
+[
+  {
+    "Name": "user1",
+    "Windows": null
+  },
+  {
+    "Name": "user2",
+    "Windows": [
+      {
+        "Title": "BobWindow",
+        "Top": 50,
+        "Left": 20,
+        "Width": 100,
+        "Height": 50
+      }
+    ]
+  },
+  {
+    "Name": "user3",
+    "Windows": [
+      {
+        "Title": "main",
+        "Top": 50,
+        "Left": 20,
+        "Width": 100,
+        "Height": 50
+      }
+    ]
+  },
+  {
+    "Name": "user4",
+    "Windows": [
+      {
+        "Title": "main",
+        "Top": 50,
+        "Left": null,
+        "Width": null,
+        "Height": 50
+      }
+    ]
+  }
+]
