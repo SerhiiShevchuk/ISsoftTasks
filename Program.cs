@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Task_NET01_2.Entity;
 
 namespace Task_NET01_2
