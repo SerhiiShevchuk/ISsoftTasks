@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <login name="user1" />
+  <login name="user2">
+    <window title="BobWindow">
+      <top>50</top>
+      <left>20</left>
+      <width>100</width>
+      <height>50</height>
+    </window>
+  </login>
+  <login name="user3">
+    <window title="main">
+      <top>50</top>
+      <left>20</left>
+      <width>100</width>
+      <height>50</height>
+    </window>
+  </login>
+  <login name="user4">
+    <window title="main">
+      <top>50</top>
+      <height>50</height>
+    </window>
+  </login>
+</config>
