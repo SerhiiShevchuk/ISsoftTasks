@@ -1,30 +1,37 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-namespace Task_NET02_2.Repositories
+namespace Task_NET02_4.Repositories
 {
-    class JsonRepository : IRepository
+    class JsonRepository : IRepo
     {
-        public List<User> LoadUsers()
+        public List<MonitorSetting> LoadMonitorsSettings()
         {
-            using (FileStream fs = new FileStream(_path, FileMode.OpenOrCreate))
+            List<MonitorSetting> setting = null;
+            using (StreamReader sr = new StreamReader(_path))
             {
-                return  JsonSerializer.DeserializeAsync<List<User>>(fs).Result;
+                var str = sr.ReadToEnd();
+                setting =  JsonSerializer.Deserialize<List<MonitorSetting>>(str);
             }
+            return setting;
         }
-        public async void SaveUsers(List<User> users)
+
+        public async void SaveMonitorSettings(List<MonitorSetting> settings)
         {
+            Console.WriteLine(Directory.GetCurrentDirectory());
+
             var options = new JsonSerializerOptions
             {
                 WriteIndented = true
             };
             using (FileStream fs = new FileStream(_path, FileMode.OpenOrCreate))
             {
-                await JsonSerializer.SerializeAsync<List<User>>(fs, users, options);
+                await JsonSerializer.SerializeAsync<List<MonitorSetting>>(fs, settings, options);
             }
         }
 
-        private string _path = @"..\..\..\Config\User`sWindowsSettings.json";
+        private string _path = @"..\..\..\Configs\MonitoringConfig.json";
     }
 }
